@@ -201,6 +201,221 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
+        .subscription-selection {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .subscription-selection h2 {
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .plan-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .plan-card {
+            background: #f8f9fa;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plan-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .plan-card.popular {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #ffc107;
+            color: #333;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .plan-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: inherit;
+        }
+
+        .plan-card .price {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: inherit;
+        }
+
+        .plan-card .price span {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .plan-card ul {
+            list-style: none;
+            text-align: left;
+        }
+
+        .plan-card ul li {
+            margin: 0.5rem 0;
+            color: inherit;
+        }
+
+        .payment-page {
+            padding: 2rem 0;
+        }
+
+        .payment-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .back-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 1rem;
+        }
+
+        .back-btn:hover {
+            background: #5a6268;
+        }
+
+        .selected-plan-info {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .selected-plan-info h3 {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .plan-price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .history-page {
+            padding: 2rem 0;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .history-header h2 {
+            margin: 0;
+            color: #333;
+        }
+
+        .payment-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+
+        .payment-item h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-item p {
+            color: #666;
+            margin: 0.25rem 0;
+        }
+
+        .status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status.succeeded {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status.failed {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status.active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .plan-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .payment-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .back-btn {
+                margin-bottom: 1rem;
+                margin-right: 0;
+            }
+            
+            .history-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .history-header .btn {
+                margin-top: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -245,47 +460,68 @@
         <div id="payment-section" class="hidden">
             <button class="logout-btn" onclick="logout()">Logout</button>
             
-            <div class="tabs">
-                <button class="tab active" onclick="switchPaymentTab('payment')">Make Payment</button>
-                <button class="tab" onclick="switchPaymentTab('subscription')">Subscription</button>
-                <button class="tab" onclick="switchPaymentTab('history')">History</button>
-            </div>
-
-            <div id="payment-tab" class="tab-content active">
-                <form id="payment-form">
-                    <div class="form-group">
-                        <label for="amount">Amount ($)</label>
-                        <input type="number" id="amount" min="1" step="0.01" required>
+            <!-- Subscription Selection Page -->
+            <div id="subscription-selection" class="subscription-selection">
+                <h2>Choose Your Subscription Plan</h2>
+                <div class="plan-cards">
+                    <div class="plan-card" onclick="selectPlan('price_1OExample1', 'Basic Plan', 9.99)">
+                        <h3>Basic Plan</h3>
+                        <div class="price">$9.99<span>/month</span></div>
+                        <ul>
+                            <li>✓ Basic features</li>
+                            <li>✓ Email support</li>
+                            <li>✓ 5GB storage</li>
+                        </ul>
                     </div>
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <input type="text" id="description" placeholder="Payment description">
+                    <div class="plan-card popular" onclick="selectPlan('price_1OExample2', 'Pro Plan', 19.99)">
+                        <div class="popular-badge">Most Popular</div>
+                        <h3>Pro Plan</h3>
+                        <div class="price">$19.99<span>/month</span></div>
+                        <ul>
+                            <li>✓ All basic features</li>
+                            <li>✓ Priority support</li>
+                            <li>✓ 50GB storage</li>
+                            <li>✓ Advanced analytics</li>
+                        </ul>
                     </div>
-                    <div id="payment-element" class="payment-element"></div>
-                    <button type="submit" class="btn" id="payment-submit">Pay Now</button>
-                </form>
-            </div>
-
-            <div id="subscription-tab" class="tab-content">
-                <form id="subscription-form">
-                    <div class="form-group">
-                        <label for="plan">Select Plan</label>
-                        <select id="plan" class="form-control" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px;">
-                            <option value="price_1OExample1">Basic Plan - $9.99/month</option>
-                            <option value="price_1OExample2">Pro Plan - $19.99/month</option>
-                            <option value="price_1OExample3">Premium Plan - $29.99/month</option>
-                        </select>
+                    <div class="plan-card" onclick="selectPlan('price_1OExample3', 'Premium Plan', 29.99)">
+                        <h3>Premium Plan</h3>
+                        <div class="price">$29.99<span>/month</span></div>
+                        <ul>
+                            <li>✓ All pro features</li>
+                            <li>✓ 24/7 phone support</li>
+                            <li>✓ Unlimited storage</li>
+                            <li>✓ Custom integrations</li>
+                        </ul>
                     </div>
-                    <div id="subscription-element" class="payment-element"></div>
-                    <button type="submit" class="btn" id="subscription-submit">Subscribe</button>
-                </form>
-            </div>
-
-            <div id="history-tab" class="tab-content">
-                <div id="payment-history" class="payment-history">
-                    <h3>Payment History</h3>
-                    <div id="history-list"></div>
                 </div>
+            </div>
+
+            <!-- Payment Page -->
+            <div id="payment-page" class="payment-page hidden">
+                <div class="payment-header">
+                    <button class="back-btn" onclick="goBackToPlans()">← Back to Plans</button>
+                    <h2>Complete Your Payment</h2>
+                </div>
+                
+                <div class="selected-plan-info">
+                    <h3 id="selected-plan-name">Plan Name</h3>
+                    <div class="plan-price" id="selected-plan-price">$0.00/month</div>
+                </div>
+
+                <form id="payment-form">
+                    <div id="payment-element" class="payment-element"></div>
+                    <button type="submit" class="btn" id="payment-submit">Subscribe Now</button>
+                </form>
+            </div>
+
+            <!-- History Page -->
+            <div id="history-page" class="history-page hidden">
+                <div class="history-header">
+                    <h2>Payment History</h2>
+                    <button class="btn" onclick="goBackToPlans()" style="max-width: 200px;">Back to Plans</button>
+                </div>
+                <div id="history-list"></div>
             </div>
         </div>
 
@@ -297,11 +533,53 @@
         const stripe = Stripe('pk_test_51RjDBgGd0cOhWu1MiabPCFUFqoRo7CuH40euAzQcDWrNrhp3Aax5Fy6P1LxmAx2bMIW4ht7fOZaFjXfE1TdkYvh1008AOJqmXc'); // Replace with your publishable key
         let elements;
         let currentUser = null;
-        let paymentElement = null;
-        let subscriptionElement = null;
+        let selectedPlan = null;
 
         // API Base URL
         const API_BASE = 'http://localhost:3000/api';
+
+        // Plan selection
+        async function selectPlan(priceId, planName, price) {
+            selectedPlan = {
+                priceId,
+                planName,
+                price
+            };
+            
+            showPaymentPage();
+        }
+
+        // Navigation functions
+        function showSubscriptionSelection() {
+            document.getElementById('subscription-selection').classList.remove('hidden');
+            document.getElementById('payment-page').classList.add('hidden');
+            document.getElementById('history-page').classList.add('hidden');
+        }
+
+        function showPaymentPage() {
+            document.getElementById('subscription-selection').classList.add('hidden');
+            document.getElementById('payment-page').classList.remove('hidden');
+            document.getElementById('history-page').classList.add('hidden');
+            
+            // Update selected plan info
+            document.getElementById('selected-plan-name').textContent = selectedPlan.planName;
+            document.getElementById('selected-plan-price').textContent = `${selectedPlan.price}/month`;
+            
+            // Initialize payment element
+            initializePaymentElement();
+        }
+
+        function showHistoryPage() {
+            document.getElementById('subscription-selection').classList.add('hidden');
+            document.getElementById('payment-page').classList.add('hidden');
+            document.getElementById('history-page').classList.remove('hidden');
+            
+            loadPaymentHistory();
+        }
+
+        function goBackToPlans() {
+            showSubscriptionSelection();
+        }
 
         // Authentication functions
         async function register(email, password) {
