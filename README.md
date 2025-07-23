@@ -2,14 +2,19 @@
 
 A comprehensive payment gateway system built with Node.js, Express.js, MongoDB, and Stripe integration. This system provides secure payment processing, user authentication, subscription management, and fraud detection capabilities.
 
-![Payment Page](assets/paymentpage.png)
-*Payment processing interface*
-
-![Registration Page](assets/registerpage.png)
 *User registration interface*
+![Registration Page](assets/registerpage.png)
 
-![Subscription Page](assets/subscriptionpage.png)
+
 *Subscription management interface*
+![Subscription Page](assets/subscriptionpage.png)
+
+
+*Payment processing interface*
+![Payment Page](assets/paymentpage.png)
+
+
+
 
 ## 🚀 Features
 
